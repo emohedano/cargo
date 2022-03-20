@@ -1,60 +1,9 @@
-import { useState } from 'react';
+import {useState, useEffect} from 'react';
 import Link from 'next/link';
-
-const LIST = [
-  {
-    status: 'ready',
-    orderId: '009-300FCT',
-    technicianName: 'Ben Santana',
-    platform: 'Gamma',
-    droneId: 'DJI004Q',
-    technicalCheckStatus: 'passed',
-  },
-];
-
-function FieldPreview({ label, value, ...other }) {
-  const { valueClasses } = other;
-
-  return (
-    <div>
-      <div className="is-capitalized	has-text-grey-light">{label}</div>
-      <div className={`is-capitalized	${valueClasses}`}>{value}</div>
-    </div>
-  );
-}
-
-function SimpleDropdownButton({ label, children }) {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <div className={`dropdown ${open ? 'is-active' : ''}`}>
-      <div className="dropdown-trigger">
-        <button
-          className="button"
-          aria-haspopup="true"
-          aria-controls="dropdown-menu"
-          onClick={() => setOpen(!open)}
-        >
-          <span>{label}</span>
-          <span className="icon is-small">
-            <i className="fas fa-angle-down" aria-hidden="true"></i>
-          </span>
-        </button>
-      </div>
-      <div className="dropdown-menu" id="dropdown-menu" role="menu">
-        <div className="dropdown-content">{children}</div>
-      </div>
-    </div>
-  );
-}
-
-function SimpleDropdownMenuItem({ label, children }) {
-  return (
-    <a href="#" className="dropdown-item">
-      {children || label}
-    </a>
-  );
-}
+import SimpleDropdownButton from '../../components/SimpleDropdown/SimpleDropdownButton';
+import SimpleDropdownMenuItem from '../../components/SimpleDropdown/SimpleDropdownMenuItem';
+import FieldPreview from '../../components/FieldPreview';
+import { getAllShipments } from '../../api/resources/shipments';
 
 function ShipmentActions({ shipment }) {
   return (
@@ -71,7 +20,14 @@ function ShipmentActions({ shipment }) {
 }
 
 export default function Shipments() {
-  const shipments = LIST;
+  const [shipments, setShipments] = useState([]);
+
+  useEffect(() => {
+    getAllShipments().then((results) => {
+      setShipments(results);
+    });
+  }, []);
+
   return (
     <div className="p-6">
       <div className="is-flex is-justify-content-space-between">
