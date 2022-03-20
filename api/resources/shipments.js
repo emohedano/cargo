@@ -1,3 +1,9 @@
+import {
+  hasCollection,
+  loadCollection,
+  saveCollection,
+} from './common/localstorage-helper';
+
 const DEFAULT_SHIPMENTS = [
   {
     status: 'ready',
@@ -12,21 +18,11 @@ const DEFAULT_SHIPMENTS = [
 const LOCAL_STORAGE_KEY = 'shippments';
 
 function loadShipments() {
-  if (!localStorage.getItem(LOCAL_STORAGE_KEY)) {
-    saveShipments(DEFAULT_SHIPMENTS);
+  if (!hasCollection(LOCAL_STORAGE_KEY)) {
+    saveCollection(LOCAL_STORAGE_KEY, DEFAULT_SHIPMENTS);
   }
 
-  try {
-    return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-  } catch (error) {
-    return [];
-  }
-}
-
-function saveShipments(shipments) {
-  try {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(shipments));
-  } catch (error) {}
+  return loadCollection(LOCAL_STORAGE_KEY);
 }
 
 export async function getAllShipments() {
@@ -34,8 +30,6 @@ export async function getAllShipments() {
 }
 
 export async function findShipmentById(orderId) {
-
-    console.log('orderId', orderId);
   const shipments = loadShipments();
   return shipments.find((shipment) => shipment.orderId === orderId) || null;
 }

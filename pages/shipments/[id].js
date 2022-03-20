@@ -14,7 +14,7 @@ export default function ShipmentDetail() {
   }, [id]);
 
   return (
-    <div>
+    <div className="p-6">
       {shipment && (
         <div className="box">
           <div className="title">Order ID: {shipment.orderId}</div>
