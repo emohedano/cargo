@@ -36,7 +36,7 @@ export default function ShipmentsMainPage() {
     <div className="p-6">
       <div className="is-flex is-justify-content-space-between">
         <div className="is-flex">
-          <h1 className="title mr-2">Delivery</h1>
+          <h1 className="title mr-5">Delivery</h1>
           <h1 className="title has-text-grey-light">History</h1>
         </div>
         <div className="is-flex">
