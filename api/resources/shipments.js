@@ -103,7 +103,7 @@ export async function getAllShipments() {
 
 export async function findShipmentById(orderId) {
   const shipments = loadShipments();
-  return shipments.find((shipment) => shipment.orderId === orderId) || null;
+  return findById(shipments, orderId);
 }
 
 export async function createShipment(shipment) {
